@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "./node_modules/@prisma/client"
 }
 
 datasource db {
@@ -29,12 +30,13 @@ model User {
 }
 
 model Profile {
-  id      Int       @id @default(autoincrement())
-  name    String
-  email   String
-  userId  Int       @unique
-  user    User?     @relation(fields: [userId], references: [id])
-  address Address[]
+  id       Int         @id @default(autoincrement())
+  name     String
+  email    String
+  userId   Int         @unique
+  user     User?       @relation(fields: [userId], references: [id])
+  address  Address[]
+  cartItem CartItems[]
 
   @@map("profiles")
 }
@@ -51,13 +53,14 @@ model Address {
 }
 
 model Product {
-  id          Int       @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   name        String
   description String
   price       Decimal
   stock       Int
   categoryId  Int?
-  category    Category? @relation(fields: [categoryId], references: [id])
+  category    Category?   @relation(fields: [categoryId], references: [id])
+  cartItem    CartItems[]
 
   @@map("products")
 }
@@ -68,4 +71,15 @@ model Category {
   product Product[]
 
   @@map("categories")
+}
+
+model CartItems {
+  id        Int      @id @default(autoincrement())
+  profileId Int
+  profile   Profile? @relation(fields: [profileId], references: [id])
+  productId Int
+  product   Product? @relation(fields: [productId], references: [id])
+  quantity  Int
+
+  @@map("cart_items")
 }

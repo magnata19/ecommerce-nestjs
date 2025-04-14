@@ -49,3 +49,23 @@ model Address {
 
   @@map("addresses")
 }
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  price       Decimal
+  stock       Int
+  categoryId  Int?
+  category    Category? @relation(fields: [categoryId], references: [id])
+
+  @@map("products")
+}
+
+model Category {
+  id      Int       @id @default(autoincrement())
+  name    String
+  product Product[]
+
+  @@map("categories")
+}

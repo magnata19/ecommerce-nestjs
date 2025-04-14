@@ -7,6 +7,7 @@ import { IProfileDto } from './interface/iprofile.dto';
 import { IRequest } from '../types/irequest.user';
 import { AddressDto } from './dto/address.dto';
 import { IAddressDto } from './interface/iaddress.dto';
+import { UserDto } from './dto/user.dto';
 
 @Controller('api/v1/user')
 export class UserController {
@@ -15,7 +16,7 @@ export class UserController {
 
   @Post("create")
   @Public()
-  async createUser(@Body() user: IUserDto): Promise<IUserDto | any> {
+  async createUser(@Body() user: UserDto): Promise<UserDto | any> {
     return await this.userService.createUser(user);
   }
 
